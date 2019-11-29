@@ -1,4 +1,4 @@
-import Mongoose from "server/db/mongoose";
+import Mongoose from "server/db/Mongoose";
 import moment from "moment";
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;

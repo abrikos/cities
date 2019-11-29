@@ -5,12 +5,16 @@ const Schema = mongoose.Schema;
 
 
 const modelSchema = new Schema({
-        field: {type: Object, required: true},
-        lastCell: {type: Number, default:0},
-
-        player: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: [true, 'Player required']},
-        opponent: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        turn: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        name: {type: Object, required: true},
+        country: {type: String, required: true},
+        address: {type: String, required: true},
+        seed: {type: String, required: true},
+        district: {type: String},
+        code: {type: String, default: ''},
+        bounds: {type: Object},
+        lat: {type: Number, required: true},
+        lng: {type: Number, required: true},
+        count: {type: Number, default: 0}
     },
     {
         timestamps: {createdAt: 'createdAt'},
@@ -20,11 +24,6 @@ const modelSchema = new Schema({
         toJSON: {virtuals: true}
     });
 
-
-modelSchema.virtual('link')
-    .get(function () {
-        return `${process.env.SITE}/filler/${this.id}`
-    });
 
 modelSchema.virtual('date')
     .get(function () {
@@ -37,7 +36,6 @@ modelSchema.virtual('updated')
     });
 
 
-
-const Filler = mongoose.model("Filler", modelSchema);
-export default Filler
+const City = mongoose.model("City", modelSchema);
+export default City
 
