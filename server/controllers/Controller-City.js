@@ -46,7 +46,7 @@ module.exports.controller = function (app) {
                     sum += city.count;
                 }
                 for (const city of cities) {
-                    data.push([`${city.name} ${city.district}, ${city.code}`, city.count, city.count / sum * 100])
+                    data.push([`${city.name}, ${city.district} ${city.code && city.code}`, city.count, city.count / sum * 100])
                 }
                 res.send({key: process.env.GOOGLE_API, data})
             })
