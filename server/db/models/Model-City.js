@@ -25,6 +25,15 @@ const modelSchema = new Schema({
     });
 
 
+modelSchema.virtual('balance')
+    .get(function () {
+        let sum = 0;
+        for(const tx of this.transactions){
+            sum+=tx.value;
+        }
+        return sum;
+    });
+
 modelSchema.virtual('date')
     .get(function () {
         return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss')
@@ -34,6 +43,13 @@ modelSchema.virtual('updated')
     .get(function () {
         return moment(this.updatedAt).format('YYYY-MM-DD HH:mm:ss')
     });
+
+modelSchema.virtual('transactions', {
+    ref: 'Transaction',
+    localField: '_id',
+    foreignField: 'city',
+    justOne: false // set true for one-to-one relationship
+});
 
 
 const City = mongoose.model("City", modelSchema);

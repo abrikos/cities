@@ -13,10 +13,6 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const fs = require('fs');
 require('dotenv').config();
-
-
-
-
 app.use(cors())
 app.use(fileUpload());
 app.use(passport.initialize());

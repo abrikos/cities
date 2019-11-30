@@ -1,10 +1,11 @@
-import {Button, Form, Input} from "reactstrap";
+import {Breadcrumb, BreadcrumbItem, Button, Form, Input} from "reactstrap";
 import {t} from "client/components/Translator";
 import Address from "client/components/Address";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/free-solid-svg-icons";
 import CityMap from "client/components/CityMap";
 import React, {useState} from "react";
+import {A} from 'hookrouter';
 
 export default function MarkCity(props) {
     const [search, setSearch] = useState();
@@ -29,12 +30,17 @@ export default function MarkCity(props) {
     }
 
 
-    return <div className="row">
+    return <div>
+        <Breadcrumb>
+            <BreadcrumbItem><A href={'/'}>{t('Home')}</A></BreadcrumbItem>
+            <BreadcrumbItem>{t('Search city')}</BreadcrumbItem>
+        </Breadcrumb>
+        <div className="row">
+
         <div className="col-md">
-            <span>{t('Search Your site')}</span>
             <Form onSubmit={formSubmit} >
                 <div className="row">
-                <span className="col-9"><Input name={'search'} defaultValue={'popovka'} size={'sm'}/></span>
+                <span className="col-9"><Input name={'search'} bsSize={'sm'}/></span>
                 <span className="col-3"><Button color={'primary'} size={'sm'}>{t('Search')}</Button></span>
                 </div>
             </Form>
@@ -68,5 +74,6 @@ export default function MarkCity(props) {
         <div className="col-md">
             {city && <CityMap city={city}/>}
         </div>
+    </div>
     </div>
 }

@@ -1,5 +1,8 @@
+import cron from "server/lib/cron"
+import websocket from "server/lib/websocket"
 const app = require('./app');
-const port = 3006;
+const port = process.env.SERVER_PORT;
+
 
 app.listen(port, 'localhost',function (err) {
     if (err) {
@@ -8,3 +11,6 @@ app.listen(port, 'localhost',function (err) {
 
     console.log(`server is listening on ${port}...`)
 });
+
+cron()
+websocket(app)

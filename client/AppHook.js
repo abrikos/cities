@@ -2,9 +2,6 @@ import React, {useState} from "react";
 import Layout from "client/views/Layout";
 import API from "client/API";
 import {navigate} from "hookrouter";
-import NotFound from "client/service/notfound";
-import AccessDenied from "client/service/access-denied";
-import ServerError from "client/service/server-error";
 
 
 export default function App() {
@@ -39,14 +36,6 @@ export default function App() {
                 throw res;
             }
             return res;
-        },
-
-        onError(res){
-            switch(res.error){
-                case 403: setErrorPage(<AccessDenied/>); break;
-                case 404: setErrorPage(<NotFound/>); break;
-                default: setErrorPage(<ServerError {...res}/>); break;
-            }
         },
 
         isLoading(on){

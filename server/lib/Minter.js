@@ -1,24 +1,24 @@
 import moment from "moment";
 
-const {MinterSDK, SendTxParams, MultisendTxParams, prepareSignedTx} = require("minter-js-sdk");
+const {Minter, SendTxParams, MultisendTxParams, prepareSignedTx} = require("minter-js-sdk");
 const axios = require("axios");
 const logger = require('logat');
 const minter = require('minterjs-wallet');
 require('dotenv').config()
 const to = require('server/lib/to');
 
-const Minter = {
+const MinterClass = {
     network: null,
 
     init(network) {
         this.network = network;
-        this.sdk = new MinterSDK({chainId: this.network.chainId, apiType: 'node', baseURL: this.network.apiUrl});
+        this.sdk = new Minter({chainId: this.network.chainId, apiType: 'node', baseURL: this.network.apiUrl});
         return this
     },
 
     async multiSendCommission(list, mnemonic, message) {
         const txSigned = await this.getTxSigned(this.multiSendTxList(list), mnemonic, message);
-        const minterSDK = new MinterSDK({apiType: 'node', baseURL: this.network.apiUrl});
+        const minterSDK = new Minter({apiType: 'node', baseURL: this.network.apiUrl});
         return await minterSDK.estimateTxCommission({transaction: txSigned.serialize().toString('hex')}) / 1000000000000000000;
     },
 
@@ -215,4 +215,4 @@ const Minter = {
 
 };
 
-export default Minter;
+export default MinterClass;

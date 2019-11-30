@@ -1,9 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import TopMenu from "client/components/TopMenu";
-//import 'bootstrap/dist/css/bootstrap.css';
 import 'client/views/style/main.sass';
 import 'client/views/style/modal.css';
-import {Alert} from "reactstrap";
 import {useRoutes} from "hookrouter";
 import routes from "client/Routes";
 import {changeLanguage, t} from "client/components/Translator";
@@ -59,15 +56,20 @@ export default function Layout(props) {
     }
 
     return <div className={'content main'}>
-        <TopMenu {...rest} items={menuItems}/>
-        <Alert {...alert}/>
+        {props.loading ? <Loader/> : <div className="container py-2">
 
-        {props.loading ? <Loader/> : <div className="container-fluid py-2">
+
             {props.errorPage || routeResult}
+            <hr/>
+            <footer>
+                <small><a href={'https://www.abrikos.pro'}>abrikos 2019</a></small>
+                <span className="float-right">
+                <a href={'#'} onClick={() => changeLanguage('en')}>🇬🇧</a>
+                <a href={'#'} onClick={() => changeLanguage('ru')}>🇷🇺</a>
+            </span>
+            </footer>
         </div>}
-        <footer>
 
-        </footer>
     </div>
 
 }

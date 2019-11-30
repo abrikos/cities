@@ -2,6 +2,7 @@ import User from "server/db/models/Model-User";
 import Referral from "server/db/models/Model-Referral";
 import Message from "server/db/models/Model-Message";
 import City from "server/db/models/Model-City";
+import Transaction from "server/db/models/Model-Transaction";
 
 const mongoose = require("mongoose");
 // подключение
@@ -21,7 +22,7 @@ const Mongoose = {
         if (!cookie.length) return false;
         return cookie.indexOf(model.cookieId) !== -1;
     },
-    User, Referral, Message, City
+    User, Referral, Message, City, Transaction
 
 };
 export default Mongoose;

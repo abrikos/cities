@@ -17,9 +17,6 @@ function parseAddresses(res) {
         const obl = addr.address_components.find(t => t.types.includes('administrative_area_level_1'))
         const postal = addr.address_components.find(t => t.types.includes('postal_code'))
         if (!obj || !obj2) continue;
-        for (const x of addr.address_components) {
-            console.log(x.types, x)
-        }
         const district = obl && obl.short_name;
         const code = postal && postal.short_name;
         const name = obj2.long_name;
@@ -39,14 +36,15 @@ module.exports.controller = function (app) {
 
     app.post('/api/city/google-chart', (req, res) => {
         Mongoose.City.find({count: {$gt: 0}})
+            .populate('transactions')
             .then(cities => {
                 const data = [['City', 'Count', 'Area']];
                 let sum = 0;
                 for (const city of cities) {
-                    sum += city.count;
+                    sum += city.balance;
                 }
-                for (const city of cities) {
-                    data.push([`${city.name}, ${city.district} ${city.code && city.code}`, city.count, city.count / sum * 100])
+                for (const city of cities.filter(c=>c.balance)) {
+                    data.push([`${city.name}, ${city.district} ${city.code && city.code}`, city.balance, city.balance / sum * 100])
                 }
                 res.send({key: process.env.GOOGLE_API, data})
             })
@@ -67,26 +65,29 @@ module.exports.controller = function (app) {
             .then(async found => {
                 const data = parseAddresses(found)
                 if (data.error) {
-                    logger.info(data.error)
+                    logger.error(data.error)
                     return res.send([])
                 }
                 const ret = [];
+
                 for (const city of data.list) {
                     const {bounds, district, lat, lng, ...rest} = city;
                     //console.log(district, bounds)
-                    let cityDb = await Mongoose.City.findOne(rest);
+                    let cityDb = await Mongoose.City.findOne(rest).populate('transactions');
                     if (!cityDb) {
-
                         const wallet = Minter.generateWallet();
                         city.address = wallet.address;
                         city.seed = wallet.seed;
+
                         cityDb = await Mongoose.City.create(city);
+                        await cityDb.populate('transactions').execPopulate();
                     }
                     cityDb.seed = null;
                     ret.push(cityDb);
                 }
                 return res.send(ret);
             })
+            //.catch(e=>logger.error(e.message))
 
     });
 
