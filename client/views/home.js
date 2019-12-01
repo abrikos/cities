@@ -18,8 +18,9 @@ export default function Home(props) {
                     <li>{t('Your city will be displayed on map')}</li>
                 </ol>
             </div>
-            <div className={'col'} >
-                <Chat {...props} height={250}/>
+            <div className={'col'}>
+                <div className="border p-2"><Chat {...props} height={250}/></div>
+
             </div>
         </div>
 
