@@ -43,6 +43,7 @@ module.exports.controller = function (app) {
                 for (const city of cities) {
                     sum += city.balance;
                 }
+                console.log(cities)
                 for (const city of cities.filter(c=>c.balance)) {
                     data.push([`${city.name}, ${city.district} ${city.code && city.code}`, city.balance, city.balance / sum * 100])
                 }
