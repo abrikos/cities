@@ -1,7 +1,7 @@
 import Mongoose from "server/db/Mongoose";
 const logger = require('logat');
 const WebSocket = require('ws');
-const wss = new WebSocket.Server({port: process.env.SERVER_PORT + 1000});
+const wss = new WebSocket.Server({port: process.env.SERVER_PORT * 1 + 1000});
 
 export default function websocket() {
     console.log('ws port', process.env.WS_PORT);
