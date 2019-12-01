@@ -14,7 +14,6 @@ export default function GeoChart(props) {
     function loadChart() {
         props.api('/city/google-chart')
             .then(d=>{
-                console.log(d)
                 setChartData(d)
             })
     }

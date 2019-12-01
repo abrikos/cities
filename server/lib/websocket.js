@@ -20,11 +20,14 @@ export default function websocket() {
             }
 
             Mongoose.Chat.create(data)
-                .then(() => {
+                .then(chat => {
                     wss.clients.forEach(function each(client) {
                         //client !== ws &&  - ws - client who sends
                         if (client.readyState === WebSocket.OPEN) {
-                            client.send(adapt(data));
+                            chat.populate('transactions').execPopulate(()=>{
+                                client.send(adapt(chat));
+                            });
+
                         }
                     });
                 })

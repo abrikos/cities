@@ -9,10 +9,15 @@ export default function Chat(props) {
     const [state, dispatchMessage] = useReducer(reducer, {messages: []});
 
     function reducer(state, action) {
-        if (action.length) return {messages: action};
-        else {
-            const messages = state.messages.concat(action);
-            messages.splice(0, 1);
+        console.log('REDUCER')
+        if (action.length) {
+            return {messages: action};
+        } else {
+            const messages = state.messages.filter(m => m.id !== action.id);
+            if (messages.length > 50)
+                messages.splice(0, 1);
+            messages.push(action)
+            console.log(messages, action)
             return {messages};
         }
     }
@@ -43,7 +48,7 @@ export default function Chat(props) {
     }
 
     function onMessage(e) {
-
+        console.log(e)
         const msg = JSON.parse(e.data);
         if (msg.error) return;
         dispatchMessage(msg)
@@ -65,12 +70,12 @@ export default function Chat(props) {
     return <div id="chat-container">
 
         <div id={'scroll'} style={{height: props.height || 250, textOverflow: 'ellipsis', overflow: 'scroll', overflowX: 'hidden'}}>
-            {state.messages.map(((m, i) => <div key={i}>{i} <strong>{m.name}</strong>: {m.text}</div>))}
+            {state.messages.map(((m, i) => <div key={i}><strong>{m.name}</strong>: {m.text}</div>))}
             <div id={"bottom"}></div>
         </div>
         <form onSubmit={sendMessage}>
             <div><input name={'name'} defaultValue={savedName} placeholder={'nick'}/></div>
-            <div><textarea name={'text'} placeholder={'message'} maxlength={100}/></div>
+            <div><textarea name={'text'} placeholder={'message'} maxLength={100}/></div>
             <button>{t('Send')}</button>
         </form>
     </div>
