@@ -61,7 +61,6 @@ module.exports.controller = function (app) {
 
     app.post('/api/search/:query', (req, res) => {
         const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(req.params.query)}&key=${process.env.GOOGLE_API}`;
-        console.log(url)
         axios.get(url)
             .then(async found => {
                 const data = parseAddresses(found)
