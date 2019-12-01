@@ -8,23 +8,13 @@ import React, {useState} from "react";
 import {A} from 'hookrouter';
 
 export default function MarkCity(props) {
-    const [search, setSearch] = useState();
     const [found, setFound] = useState();
     const [city, setCity] = useState();
 
-    function formToObject(form) {
-        const array = Array.from(form.elements).filter(f => !!f.name)
-        const obj = {};
-        for (const a of array) {
-            obj[a.name] = a.value
-            //if (a.name === 'name' && !a.value) errors.push(a.name)
-        }
-        return obj
-    }
 
     function formSubmit(e) {
         e.preventDefault();
-        const form = formToObject(e.target);
+        const form = props.formToObject(e.target);
         props.api(`/search/${form.search}`)
             .then(setFound)
     }

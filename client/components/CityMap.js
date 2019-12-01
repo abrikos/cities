@@ -8,7 +8,7 @@ export default function CityMap(props) {
         return [b.northeast, b.southwest];
     }
 
-    const {lat, lng, ...rest} = props.city;
+    const {lat, lng} = props.city;
 
     const mapParams = {
         zoom: 13,

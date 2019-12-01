@@ -3,13 +3,14 @@ import 'client/views/style/main.sass';
 import 'client/views/style/modal.css';
 import {useRoutes} from "hookrouter";
 import routes from "client/Routes";
-import {changeLanguage, t} from "client/components/Translator";
+import {changeLanguage} from "client/components/Translator";
 import Loader from "client/components/Loader";
+import {Button} from "reactstrap";
 
 
 export default function Layout(props) {
-    let {children, alert, ...rest} = props;
 
+/*
     const menuItems = [
         {label: t('Home'), path: '/'},
         {label: t('Mark my city'), path: '/mark'},
@@ -23,6 +24,7 @@ export default function Layout(props) {
             ]
         },
     ];
+*/
     useEffect(() => {
         props.checkAuth()
             .then(res => {
@@ -64,8 +66,8 @@ export default function Layout(props) {
             <footer>
                 <small><a href={'https://www.abrikos.pro'}>abrikos 2019</a></small>
                 <span className="float-right">
-                <a href={'#'} onClick={() => changeLanguage('en')}>🇬🇧</a>
-                <a href={'#'} onClick={() => changeLanguage('ru')}>🇷🇺</a>
+                <Button onClick={() => changeLanguage('en')} color={'link'}><span role="img" aria-label={"EN"}>🇬🇧</span></Button>
+                    <Button onClick={() => changeLanguage('ru')} color={'link'}><span role="img" aria-label={"RU"}>🇷🇺</span></Button>
             </span>
             </footer>
         </div>}

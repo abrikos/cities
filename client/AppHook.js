@@ -8,9 +8,7 @@ export default function App() {
     const [alert, setAlert] = useState({isOpen: false});
     const [authenticatedUser, setAuth] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [errorPage, setErrorPage] = useState(false)
     const params = {
-        errorPage,
         loading,
         authenticatedUser,
         alert,
@@ -38,7 +36,7 @@ export default function App() {
             return res;
         },
 
-        isLoading(on){
+        isLoading(on) {
             setLoading(on)
         },
 
@@ -64,6 +62,27 @@ export default function App() {
 
                 });
         },
+
+        formToObject(form) {
+            const array = Array.from(form.elements).filter(f => !!f.name)
+            const obj = {};
+            for (const a of array) {
+                obj[a.name] = a.value
+                //if (a.name === 'name' && !a.value) errors.push(a.name)
+            }
+            return obj
+        },
+
+        getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
     };
 
 
