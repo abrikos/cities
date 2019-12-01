@@ -59,17 +59,17 @@ export default function Layout(props) {
 
     return <div className={'content main'}>
         {props.loading ? <Loader/> : <div className="container py-2">
-
+            <span>
+                    <Button onClick={() => changeLanguage('en')} color={'link'}><span role="img" aria-label={"EN"}>🇬🇧</span></Button>
+                    <Button onClick={() => changeLanguage('ru')} color={'link'}><span role="img" aria-label={"RU"}>🇷🇺</span></Button>
+                </span>
 
             {props.errorPage || routeResult}
             <hr/>
             <footer className="d-flex justify-content-between">
                 <span><a href={'https://www.abrikos.pro'} target={'_blank'}>abrikos 2019</a></span>
                 <span><a href={'https://telegram.me/mnt_crane_bot'} target={'_blank'}>{t('Free MNT')}</a></span>
-                <span>
-                    <Button onClick={() => changeLanguage('en')} color={'link'}><span role="img" aria-label={"EN"}>🇬🇧</span></Button>
-                    <Button onClick={() => changeLanguage('ru')} color={'link'}><span role="img" aria-label={"RU"}>🇷🇺</span></Button>
-                </span>
+
             </footer>
         </div>}
 
