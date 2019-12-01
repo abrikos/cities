@@ -6,7 +6,7 @@ import routes from "client/Routes";
 import {changeLanguage} from "client/components/Translator";
 import Loader from "client/components/Loader";
 import {Button} from "reactstrap";
-
+import {t} from "client/components/Translator"
 
 export default function Layout(props) {
 
@@ -63,12 +63,13 @@ export default function Layout(props) {
 
             {props.errorPage || routeResult}
             <hr/>
-            <footer>
-                <small><a href={'https://www.abrikos.pro'}>abrikos 2019</a></small>
-                <span className="float-right">
-                <Button onClick={() => changeLanguage('en')} color={'link'}><span role="img" aria-label={"EN"}>🇬🇧</span></Button>
+            <footer className="d-flex justify-content-between">
+                <span><a href={'https://www.abrikos.pro'} target={'_blank'}>abrikos 2019</a></span>
+                <span><a href={'https://telegram.me/mnt_crane_bot'} target={'_blank'}>{t('Free MNT')}</a></span>
+                <span>
+                    <Button onClick={() => changeLanguage('en')} color={'link'}><span role="img" aria-label={"EN"}>🇬🇧</span></Button>
                     <Button onClick={() => changeLanguage('ru')} color={'link'}><span role="img" aria-label={"RU"}>🇷🇺</span></Button>
-            </span>
+                </span>
             </footer>
         </div>}
 
