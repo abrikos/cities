@@ -35,7 +35,7 @@ function parseAddresses(res) {
 module.exports.controller = function (app) {
 
     app.post('/api/city/google-chart', (req, res) => {
-        Mongoose.City.find({count: {$gt: 0}})
+        Mongoose.City.find()
             .populate('transactions')
             .then(cities => {
                 const data = [['City', 'Count', 'Area']];
@@ -43,7 +43,6 @@ module.exports.controller = function (app) {
                 for (const city of cities) {
                     sum += city.balance;
                 }
-                console.log(cities)
                 for (const city of cities.filter(c=>c.balance)) {
                     data.push([`${city.name}, ${city.district} ${city.code && city.code}`, city.balance, city.balance / sum * 100])
                 }
